@@ -16,16 +16,43 @@ const ProductCard = ({
     const [selectedViewProduct, setSelectedViewProduct] = useState("")
     const isAvailable = quantity && Number(quantity) > 0
 
+    const handleProductView = (product) => {
+        setSelectedViewProduct(product)
+        setOpenProductViewModel(true)
+    }
+
     return (
         <div className="rounded-lg border-0 shadow-xl overflow-hidden transition-shadow duration-300">
-            <div onClick={() => {}} className="w-full overflow-hidden aspect-3/2">
+            <div onClick={() => {
+                handleProductView({
+                    id: productId,
+                    productName,
+                    image,
+                    description,
+                    quantity,
+                    price,
+                    discount,
+                    specialPrice
+                })
+            }} className="w-full overflow-hidden aspect-3/2">
                 <img className="w-full h-full cursor-pointer transition-transform duration-300 transform hover:scale-105"
                     src={image}
                     alt={productName}>
                 </img>
             </div>
             <div className="p-4">
-                <h2 onClick={() => {}}
+                <h2 onClick={() => {
+                    handleProductView({
+                    id: productId,
+                    productName,
+                    image,
+                    description,
+                    quantity,
+                    price,
+                    discount,
+                    specialPrice
+                })
+                }}
                     className="text-lg font-semibold mb-2 cursor-pointer">
                     {productName}
                 </h2>
@@ -52,7 +79,9 @@ const ProductCard = ({
                         </div>
                     )}
 
-                    <button className={`bg-pink-200 p-1 rounded-lg transition-colors duration-300 w-36 flex justify-center absolute top-6 right-0 text-gray-800
+                    <button onClick={() => {}}
+                            disabled={!isAvailable || buttonLoader}
+                            className={`bg-pink-200 p-1 rounded-lg transition-colors duration-300 w-36 flex justify-center absolute top-6 right-0 text-gray-800
                                         ${isAvailable ? "opacity-100 hover:bg-pink-500" : "opacity-70"}`}>
                         <FaShoppingCart className="mr-2 absolute top-2 left-3"/>
                         <h1 className="ml-5">{isAvailable ? "Add to Cart" : "Stock Out"}</h1>

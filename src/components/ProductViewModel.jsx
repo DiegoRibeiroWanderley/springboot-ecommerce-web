@@ -20,7 +20,7 @@ export default function ProductViewModel({open, setOpen, product, isAvailable}) 
                     <div className="flex min-h-full items-center justify-center p-4">
                         <DialogPanel
                             transition
-                            className="relative transform overflow-hidden rounded-lg bg-white shadow-xl transition-all md:max-w[620px] md:min-w[620px]">
+                            className="relative transform overflow-hidden rounded-lg bg-white shadow-xl transition-all min-h-180 min-w-180">
                             
                             {image && (
                                 <div className='flex justify-center aspect-3/2'>

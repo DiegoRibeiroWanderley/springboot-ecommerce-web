@@ -59,7 +59,7 @@ const ProductCard = ({
                 </h2>
 
                 <div className="min-h-20 max-h-20">
-                    <p className="text-sm">{description}</p>
+                    <p className="text-lg text-slate-800">{description}</p>
                 </div>
                 
                 <div className="min-h-16 flex items-center justify-between">

@@ -82,7 +82,7 @@ const ProductCard = ({
 
                     <button onClick={() => {}}
                             disabled={!isAvailable || buttonLoader}
-                            className={`bg-pink-200 p-1 rounded-lg transition-colors duration-300 w-36 flex justify-center mt-3.5 text-gray-800
+                            className={`bg-pink-200 p-2 rounded-lg transition-colors duration-300 w-36 flex justify-center mt-3.5 text-gray-800
                                         ${isAvailable ? "opacity-100 hover:bg-pink-300" : "opacity-70"}`}>
                         <FaShoppingCart className="mt-1 ml-1"/>
                         <h1 className="ml-5">{isAvailable ? "Add to Cart" : "Stock Out"}</h1>

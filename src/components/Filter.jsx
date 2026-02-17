@@ -74,7 +74,7 @@ const Filter = ({categories}) => {
     }, [searchParams])
     
     return (
-        <div className="flex lg:flex-row justify-between gap-4">
+        <div className="flex lg:flex-row sm:flex-col justify-between gap-4">
             {/* SEARCH BAR */}
             <div className="relative flex items-center 2xl:w-112.5 sm:w-105">
                 <input

@@ -1,11 +1,12 @@
 import { FaExclamationTriangle } from "react-icons/fa"
 import ProductCard from "./ProductCard"
 import { useDispatch, useSelector } from "react-redux"
-import { use, useEffect } from "react"
+import { useEffect } from "react"
 import { fetchCategories, fetchProcuts } from "../store/actions"
 import Filter from "./Filter"
 import useProductFilter from "../hooks/useProductFilter"
 import Loader from "./Loader"
+import Paginations from "./Paginations"
 
 const Products = () => {
     const { isLoading, errorMessage } = useSelector (
@@ -40,6 +41,12 @@ const Products = () => {
                         {products && products.map((item, i) => (
                             <ProductCard key={i} {...item} />
                         ) )}
+                    </div>
+
+                    <div className="flex justify-center pt-10">
+                        <Paginations
+                            numberOfPages = {pagination?.totalPages}
+                            totalProducts = {pagination?.totalElements} />
                     </div>
                 </div>
             )}

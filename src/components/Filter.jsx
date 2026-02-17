@@ -5,7 +5,7 @@ import { FiArrowDown, FiArrowUp, FiRefreshCcw } from "react-icons/fi";
 import { MdSearch } from "react-icons/md"
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
-const Filter = () => {
+const Filter = ({categories}) => {
     const theme = createTheme({
         palette: {
             primary: {
@@ -13,11 +13,6 @@ const Filter = () => {
             },
         },
     });
-
-    const categories = [
-        { categoryId: 1, categoryName: "Music" },
-        { categoryId: 2, categoryName: "Albun" }
-    ]
 
     const [searchParams] = useSearchParams()
     const pathName = useLocation().pathname

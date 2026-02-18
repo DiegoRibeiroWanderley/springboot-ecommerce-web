@@ -74,9 +74,9 @@ const Filter = ({categories}) => {
     }, [searchParams])
     
     return (
-        <div className="flex lg:flex-row sm:flex-col justify-between gap-4">
+        <div className="flex lg:flex-row flex-col justify-between gap-4">
             {/* SEARCH BAR */}
-            <div className="relative flex items-center 2xl:w-112.5 sm:w-105">
+            <div className="sm:w-115 lg:w-345 relative flex items-center w-100">
                 <input
                     type="text"
                     placeholder="Search Products"
@@ -87,7 +87,7 @@ const Filter = ({categories}) => {
             </div>
 
             {/* CATEGORY SELECTION */}
-            <div className="flex sm:flex-row flex-col gap-4 items-center">
+            <div className="sm:w-115 sm:justify-between lg:justify-end flex sm:flex-row flex-col gap-4 items-center">
                 <FormControl
                     variant="outlined"
                     size="small">
@@ -100,7 +100,7 @@ const Filter = ({categories}) => {
                         Category
                     </InputLabel>
                     <Select
-                        className="min-w-30 max-w-30"
+                        className="lg:w-30 sm:w-40"
                         sx={{
                             '.MuiOutlinedInput-notchedOutline': {
                                 borderColor: "#f06292"
@@ -131,7 +131,7 @@ const Filter = ({categories}) => {
                         <Button 
                             onClick={toggleSortOrder}
                             variant="contained" 
-                            className="flex items-center gap-2 h-10">
+                            className="sm:w-30 lg:w-30 flex items-center gap-2 h-10">
                             Sort By
                             {sortOrder === "asc" ? <FiArrowUp size={23} /> : <FiArrowDown size={23} />}
                         </Button>

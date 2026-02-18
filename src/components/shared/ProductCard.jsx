@@ -1,5 +1,7 @@
 import { useState } from "react"
 import { FaShoppingCart } from "react-icons/fa";
+
+import { truncateText } from "../../utils/truncateText";
 import ProductViewModel from "./ProductViewModel";
 
 const ProductCard = ({
@@ -55,11 +57,11 @@ const ProductCard = ({
                 })
                 }}
                     className="text-lg font-semibold mb-2 cursor-pointer">
-                    {productName}
+                    {truncateText(productName, 20)}
                 </h2>
 
                 <div className="min-h-20 max-h-20">
-                    <p className="text-lg text-slate-800">{description}</p>
+                    <p className="text-lg text-slate-800">{truncateText(description, 80)}</p>
                 </div>
                 
                 <div className="min-h-16 flex items-center justify-between">

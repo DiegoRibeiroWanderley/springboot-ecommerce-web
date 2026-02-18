@@ -7,19 +7,19 @@ const Paginations = ({numberOfPages, totalProducts}) => {
     const params = new URLSearchParams(searchParams)
     const navigate = useNavigate()
 
-    const paramValue = searchParams.get("page") 
-        ? Number(searchParams.get("page")) 
-        : 1
+    const paramValue = searchParams.get("pageNumber") 
+        ? Number(searchParams.get("pageNumber")) 
+        : 0
 
     const onChangeHandler = (event, value) => {
-        params.set("page", value.toString())
+        params.set("pageNumber", (value - 1).toString())
         navigate(`${pathname}?${params}`)
     }
 
     return (
         <Pagination 
             count={numberOfPages} 
-            page={paramValue}
+            page={paramValue + 1}
             defaultPage={1} 
             siblingCount={0} 
             boundaryCount={2}

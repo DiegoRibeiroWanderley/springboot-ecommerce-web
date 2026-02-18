@@ -1,20 +1,24 @@
 import { FaExclamationTriangle } from "react-icons/fa"
-import ProductCard from "./ProductCard"
+import ProductCard from "../shared/ProductCard"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
-import { fetchCategories, fetchProcuts } from "../store/actions"
+import { fetchCategories, fetchProcuts } from "../../store/actions"
 import Filter from "./Filter"
-import useProductFilter from "../hooks/useProductFilter"
-import Loader from "./Loader"
-import Paginations from "./Paginations"
+import useProductFilter from "../../hooks/useProductFilter"
+import Loader from "../shared/Loader"
+import Paginations from "../shared/Paginations"
 
 const Products = () => {
     const { isLoading, errorMessage } = useSelector (
         (state) => state.errors
     )
 
-    const {products, categories, pagination} = useSelector (
+    const {products, pagination} = useSelector (
         (state) => state.products
+    )
+
+    const {categories} = useSelector (
+        (state) => state.categories
     )
 
     const dispatch = useDispatch()
@@ -38,8 +42,8 @@ const Products = () => {
             ) : (
                 <div className="min-h-175">
                     <div className="pb-6 pt-14 grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-y-6 gap-x-6">
-                        {products && products.map((item, i) => (
-                            <ProductCard key={i} {...item} />
+                        {products && products.map((product, i) => (
+                            <ProductCard key={i} {...product} />
                         ) )}
                     </div>
 

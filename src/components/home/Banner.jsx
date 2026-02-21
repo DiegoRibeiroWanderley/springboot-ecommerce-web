@@ -14,7 +14,7 @@ const Banner = () => {
     const colors = ["bg-pink-300", "bg-orange-300", "bg-blue-300"]
 
     return (
-        <div className='py-2 rounded-md'>
+        <div className='py-2 rounded-lg'>
             <Swiper
                 grabCursor={true}
                 autoplay={{
@@ -29,7 +29,7 @@ const Banner = () => {
             >
                 {bannerList.map((item, index) => (
                     <SwiperSlide>
-                        <div className={`carousel-item rounden-md sm:h-125 h-96 ${colors[index]}`}>
+                        <div className={`carousel-item rounded-md sm:h-125 h-96 ${colors[index]}`}>
                             <div className='flex items-center'>
                                 <div className='text-center lg:ml-100 ml-20 mt-8'>
                                     <h3 className='text-3xl text-white font-bold'>

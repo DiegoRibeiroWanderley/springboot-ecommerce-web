@@ -29,10 +29,10 @@ const Banner = () => {
             >
                 {bannerList.map((item, index) => (
                     <SwiperSlide>
-                        <div className={`carousel-item rounded-md sm:h-125 h-96 ${colors[index]}`}>
-                            <div className='flex items-center'>
-                                <div className='text-center lg:ml-100 ml-20 mt-8'>
-                                    <h3 className='text-3xl text-white font-bold'>
+                        <div className={`rounded-md sm:h-125 h-96 ${colors[index]}`}>
+                            <div className='flex flex-col sm:flex-row items-center'>
+                                <div className='text-center sm:ml-100 sm:mt-8'>
+                                    <h3 className='text-3xl text-white font-bold mt-2'>
                                         {item.title}
                                     </h3>
                                     <h1 className='text-5xl text-white font-bold mt-2'>
@@ -41,12 +41,14 @@ const Banner = () => {
                                     <p className='text-white font-bold mt-4'>
                                         {item.description}
                                     </p>
-                                    <Link to={"/products"}
-                                        className='mt-6 inline-block bg-black text-white py-2 px-4 rounded hover:bg-gray-800'>
-                                        Shop
-                                    </Link>
+                                    <div>
+                                        <Link to={"/products"}
+                                            className='mt-6 inline-block bg-black text-white py-2 px-4 rounded hover:bg-gray-800'>
+                                            Shop
+                                        </Link>
+                                    </div>
                                 </div>
-                                <div className='flex justify-center mt-8 ml-50 lg:w-1/2 h-100 w-600'>
+                                <div className='flex justify-center sm:ml-90 sm:max-h-100 sm:max-w-150 sm:mt-9 max-h-50 max-w-75'>
                                     <img src={item?.image}></img>
                                 </div>
                             </div> 

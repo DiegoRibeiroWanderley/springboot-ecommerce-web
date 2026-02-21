@@ -3,7 +3,7 @@ import { useState } from "react"
 import { FaShoppingCart, FaSignInAlt, FaStore } from "react-icons/fa"
 import { Link, useLocation } from "react-router-dom"
 import { RxCross2 } from "react-icons/rx";
-import { IoIosMenu } from "react-icons/io";
+import { IoIosMenu, IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 
 const NavigationBar = () => {
     const path = useLocation().pathname
@@ -22,32 +22,44 @@ const NavigationBar = () => {
                     transition-all duration-100 sm:h-fit sm:bg-none bg-linear-to-bl from-pink-300 to-pink-500 text-white sm:w-fit w-full sm:flex-row flex-col px-4 sm:px-0`}>
                     <li className="font-medium transition-all duration-150 mt-2">
                         <Link 
-                            className={`${path === "/" ? "text-pink-400" : "text-white"}`}
+                            className={`${path === "/" ? "sm:text-pink-400 text-white"  : "text-white"} flex flex-row`}
                             to="/">
+                            <span className="block sm:hidden">
+                                {path === "/" ? <IoIosArrowForward className="text-xl mt-0.75"/> : <IoIosArrowDown className="text-xl mt-0.75"/>}
+                            </span>
                             Home
                         </Link>
                     </li>
 
                     <li className="font-medium transition-all duration-150 mt-2">
                         <Link 
-                            className={`${path === "/products" ? "text-pink-400" : "text-white"}`}
+                            className={`${path === "/products" ? "sm:text-pink-400 text-white" : "text-white"} flex flex-row`}
                             to="/products">
+                            <span className="block sm:hidden">
+                                {path === "/products" ? <IoIosArrowForward className="text-xl mt-0.75"/> : <IoIosArrowDown className="text-xl mt-0.75"/>}
+                            </span>
                             Products
                         </Link>
                     </li>
                     
                     <li className="font-medium transition-all duration-150 mt-2">
                         <Link 
-                            className={`${path === "/about" ? "text-pink-400" : "text-white"}`}
+                            className={`${path === "/about" ? "sm:text-pink-400 text-white" : "text-white"} flex flex-row`}
                             to="/about">
+                            <span className="block sm:hidden">
+                                {path === "/about" ? <IoIosArrowForward className="text-xl mt-0.75"/> : <IoIosArrowDown className="text-xl mt-0.75"/>}
+                            </span>
                             About
                         </Link>
                     </li>
 
                     <li className="font-medium transition-all duration-150 mt-2">
                         <Link 
-                            className={`${path === "/contact" ? "text-pink-400" : "text-white"}`}
+                            className={`${path === "/contact" ? "sm:text-pink-400 text-white" : "text-white"} flex flex-row`}
                             to="/contact">
+                            <span className="block sm:hidden">
+                                {path === "/contact" ? <IoIosArrowForward className="text-xl mt-0.75"/> : <IoIosArrowDown className="text-xl mt-0.75"/>}
+                            </span>
                             Contact
                         </Link>
                     </li>

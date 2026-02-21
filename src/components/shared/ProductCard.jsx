@@ -12,7 +12,8 @@ const ProductCard = ({
     quantity,
     price,
     discount,
-    specialPrice
+    specialPrice,
+    about = false
 }) => {
     const [openProductViewModel, setOpenProductViewModel] = useState(false)
     const buttonLoader = false;
@@ -20,8 +21,10 @@ const ProductCard = ({
     const isAvailable = quantity && Number(quantity) > 0
 
     const handleProductView = (product) => {
-        setSelectedViewProduct(product)
-        setOpenProductViewModel(true)
+        if (!about) {
+            setSelectedViewProduct(product)
+            setOpenProductViewModel(true)
+        }
     }
 
     return (
@@ -64,32 +67,34 @@ const ProductCard = ({
                     <p className="text-lg text-slate-800">{truncateText(description, 80)}</p>
                 </div>
                 
-                <div className="min-h-16 flex items-center justify-between">
-                    {specialPrice !== price ? (
-                        <div className="flex flex-col">
-                            <span className="line-through">
-                                ${Number(price).toFixed(2)}
-                            </span>
-                            <span className="text-xl font-bold text-slate-700">
-                                ${Number(specialPrice).toFixed(2)}
-                            </span>
-                        </div>
-                    ) : (
-                        <div className="mt-6 flex flex-col relative">
-                            <span className=" top-6 text-xl font-bold text-gray-700 p">
-                                ${Number(price).toFixed(2)}
-                            </span>
-                        </div>
-                    )}
+                {!about && (
+                    <div className="min-h-16 flex items-center justify-between">
+                        {specialPrice !== price ? (
+                            <div className="flex flex-col">
+                                <span className="line-through">
+                                    ${Number(price).toFixed(2)}
+                                </span>
+                                <span className="text-xl font-bold text-slate-700">
+                                    ${Number(specialPrice).toFixed(2)}
+                                </span>
+                            </div>
+                        ) : (
+                            <div className="mt-6 flex flex-col relative">
+                                <span className=" top-6 text-xl font-bold text-gray-700 p">
+                                    ${Number(price).toFixed(2)}
+                                </span>
+                            </div>
+                        )}
 
-                    <button onClick={() => {}}
-                            disabled={!isAvailable || buttonLoader}
-                            className={`bg-pink-200 p-2 rounded-lg transition-colors duration-300 w-36 flex justify-center mt-3.5 text-gray-800
-                                        ${isAvailable ? "opacity-100 hover:bg-pink-300" : "opacity-70"}`}>
-                        <FaShoppingCart className="mt-1 ml-1"/>
-                        <h1 className="ml-5">{isAvailable ? "Add to Cart" : "Stock Out"}</h1>
-                    </button>
-                </div>
+                        <button onClick={() => {}}
+                                disabled={!isAvailable || buttonLoader}
+                                className={`bg-pink-200 p-2 rounded-lg transition-colors duration-300 w-36 flex justify-center mt-3.5 text-gray-800
+                                            ${isAvailable ? "opacity-100 hover:bg-pink-300" : "opacity-70"}`}>
+                            <FaShoppingCart className="mt-1 ml-1"/>
+                            <h1 className="ml-5">{isAvailable ? "Add to Cart" : "Stock Out"}</h1>
+                        </button>
+                    </div>
+                )}
             </div>
             <ProductViewModel 
                 open={openProductViewModel}

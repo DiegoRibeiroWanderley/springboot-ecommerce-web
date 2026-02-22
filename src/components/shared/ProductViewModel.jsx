@@ -16,11 +16,11 @@ export default function ProductViewModel({open, setOpen, product, isAvailable}) 
         <div>
             <Dialog open={open} as="div" className="relative z-10" onClose={close}>
                 <DialogBackdrop className="fixed inset-0 bg-gray-500 opacity-50 transition-opacity" />
-                <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div className="fixed inset-0 z-10 sm:w-screen overflow-y-auto">
                     <div className="flex min-h-full items-center justify-center p-4">
                         <DialogPanel
                             transition
-                            className="relative transform overflow-hidden rounded-lg bg-white shadow-xl transition-all min-h-180 min-w-180">
+                            className="relative transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:min-h-180 sm:min-w-180 min-h-18 min-w-18">
                             
                             {image && (
                                 <div className='flex justify-center aspect-3/2'>

@@ -1,6 +1,9 @@
 import { useState } from "react"
 import { HiOutlineTrash } from "react-icons/hi"
 import SetQuantity from "./SetQuantity"
+import { useDispatch } from "react-redux"
+import { decreaseCartQuantity, increaseCartQuantity } from "../../store/actions"
+import toast from "react-hot-toast"
 
 const ItemContent = ({
     productId,
@@ -14,6 +17,24 @@ const ItemContent = ({
     cartId
 }) => {
     const [currentQuantity, setCurrentQuantity] = useState(quantity)
+    const dispatch = useDispatch()
+
+    const handleQtyIncrease = (cartItem) => {
+        dispatch(increaseCartQuantity(
+            cartItem,
+            toast,
+            currentQuantity,
+            setCurrentQuantity
+        ))
+    }
+
+    const handleQtyDecrease = (cartItem) => {
+        if (currentQuantity > 1) {
+            const newQuantity = currentQuantity - 1
+            setCurrentQuantity(newQuantity)
+            dispatch(decreaseCartQuantity(cartItem, newQuantity))
+        }
+    }
 
     return (
         <div className="p-2 grid md:grid-cols-5 grid-cols-4 md:text-md text-sm gap-4 mb-1 rounded-md shadow-sm items-center border border-slate-200">
@@ -49,8 +70,28 @@ const ItemContent = ({
                 <SetQuantity
                     quantity={currentQuantity}
                     cardCounter={true}
-                    handleQtyIncrease={() => {}}
-                    handleQtyDecrease={() => {}}/>
+                    handleQtyIncrease={() => handleQtyIncrease(
+                        {productId,
+                        productName,
+                        image,
+                        description,
+                        quantity,
+                        price,
+                        discount,
+                        specialPrice,
+                        cartId}
+                    )}
+                    handleQtyDecrease={() => handleQtyDecrease(
+                        {productId,
+                        productName,
+                        image,
+                        description,
+                        quantity,
+                        price,
+                        discount,
+                        specialPrice,
+                        cartId}
+                    )}/>
             </div>
 
             <div className="ml-7 sm:ml-18 justify-self-start lg:text-[17px] text-sm text-slate-600 font-semibold">

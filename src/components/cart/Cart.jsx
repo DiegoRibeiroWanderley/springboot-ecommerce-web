@@ -1,7 +1,17 @@
 import { MdArrowBack, MdShoppingCart } from "react-icons/md"
+import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
+import ItemContent from "./ItemContent"
 
 const Cart = () => {
+    const dispatch = useDispatch()
+    const { cart } = useSelector((state) => state.carts)
+    const newCart = { ...cart }
+
+    newCart.totalprice = cart?.reduce(
+        (acc, cur) => acc * Number(cur?.specialPrice) * Number(cur?.quantity), 0
+    )
+
     return (
         <div className="lg:px-14 sm:px-8 px-4 py-10">
             <div className="flex flex-col items-center mb-12">
@@ -11,51 +21,65 @@ const Cart = () => {
                 </h1>
             </div>
 
-            <div className="grid md:grid-cols-5 grid-cols-4 gap-4 pb-2 font-semibold">
-                <div className="md:col-span-2 justify-self-start text-lg text-slate-800 lg:ps-4">
-                    Product
+            {(!cart || cart.lenght === 0) ? (
+                <div className="text-center font-semibold mt-80">
+                    Cart is Empty
                 </div>
-
-                <div className="justify-self-center text-lg text-slate-800">
-                    Price
-                </div>
-
-                <div className="justify-self-center text-lg text-slate-800">
-                    Quantity
-                </div>
-
-                <div className="justify-self-center text-lg text-slate-800">
-                    Total
-                </div>
-            </div>
-
-            <div className="border-t-[1.5] border-slate-200 py-4 flex sm:flex-row sm:px-0 px-2 flex-col sm:justify-between gap-4">
-                <div></div>
-                <div className="flex text-sm gap-1 flex-col sm:w-full w-60 sm:ml-0 ml-35">
-                    <div className="flex justify-between w-full md:text-lg text-sm font-semibold">
-                        <span>Subtotal</span>
-                        <span>$400</span>
+            ) : (
+                <div>
+                    <div className="grid md:grid-cols-5 grid-cols-4 gap-4 pb-2 font-semibold">
+                    <div className="md:col-span-2 justify-self-start text-lg text-slate-800 lg:ps-4">
+                        Product
                     </div>
 
-                    <p className="text-slate-500">
-                        Taxes and shipping calculated at checkout
-                    </p>
+                    <div className="justify-self-center text-lg text-slate-800">
+                        Price
+                    </div>
 
-                    <Link className="w-full flex justify-end" to="/checkout">
-                        <button 
-                            onClick={() => {}}
-                            className="font-semibold w-75 py-2 px-4 rounded-sm bg-pink-400 text-white flex items-center justify-center gap-2 hover:text-pink-200 transition duration-300">
-                            <MdShoppingCart />
-                            Checkout
-                        </button>
-                    </Link>
+                    <div className="justify-self-center text-lg text-slate-800">
+                        Quantity
+                    </div>
 
-                    <Link className="flex gap-2 items-center mt-2 text-slate-500" to="/products">
-                        <MdArrowBack />
-                        <span>Continue shopping</span>
-                    </Link>
+                    <div className="justify-self-center text-lg text-slate-800">
+                        Total
+                    </div>
+                </div>
+
+                <div>
+                    {cart && cart.length > 0 && cart.map((item, index) => <ItemContent key={index} {...item} />)}
+                </div>
+
+                <div className="border-t-[1.5] border-slate-200 py-4 flex sm:flex-row sm:px-0 px-2 flex-col sm:justify-between gap-4">
+                    <div></div>
+                    <div className="flex text-sm gap-1 flex-col sm:w-75 w-60 sm:ml-0 ml-35">
+                        <div className="flex justify-between w-full md:text-lg text-sm font-semibold">
+                            <span>Subtotal</span>
+                            <span>$</span>
+                        </div>
+
+                        <p className="text-slate-500">
+                            Taxes and shipping calculated at checkout
+                        </p>
+
+                        <Link className="w-full flex justify-end" to="/checkout">
+                            <button 
+                                onClick={() => {}}
+                                className="font-semibold w-75 py-2 px-4 rounded-sm bg-pink-400 text-white flex items-center justify-center gap-2 hover:text-pink-200 transition duration-300">
+                                <MdShoppingCart />
+                                Checkout
+                            </button>
+                        </Link>
+
+                        <Link className="flex gap-2 items-center mt-2 text-slate-500" to="/products">
+                            <MdArrowBack />
+                            <span>Continue shopping</span>
+                        </Link>
+                    </div>
                 </div>
             </div>
+            )}
+
+            
         </div>
     )
 }

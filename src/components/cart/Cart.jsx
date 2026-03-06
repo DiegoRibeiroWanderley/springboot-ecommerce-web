@@ -7,14 +7,11 @@ import { formatPrice } from "../../utils/formatPrice"
 
 const Cart = () => {
     const dispatch = useDispatch()
-    const { cart } = useSelector((state) => state.carts)
-    const newCart = { ...cart }
+    const cart = useSelector((state) => state.carts.cart)
+    const products = cart?.products
+    const totalPrice = cart?.totalPrice
 
-    newCart.totalprice = cart?.reduce(
-        (acc, cur) => acc + Number(cur?.specialPrice) * Number(cur?.quantity), 0
-    )
-
-    if (!cart || cart.length === 0) return (<CartEmpty />)
+    if (!products || products.length === 0) return (<CartEmpty />)
 
     return (
         <div className="lg:px-14 sm:px-8 px-4 py-10">
@@ -45,7 +42,7 @@ const Cart = () => {
             </div>
 
             <div>
-                {cart && cart.length > 0 && cart.map((item, index) => <ItemContent key={index} {...item} />)}
+                {products && products.length > 0 && products.map((item, index) => <ItemContent key={index} {...item} />)}
             </div>
 
             <div className="border-t-[1.5] border-slate-200 py-4 flex sm:flex-row sm:px-0 px-2 flex-col sm:justify-between gap-4">
@@ -53,7 +50,7 @@ const Cart = () => {
                     <div className="flex text-sm gap-1 flex-col sm:w-75 w-60 sm:ml-0 ml-35">
                         <div className="flex justify-between w-full md:text-lg text-sm font-semibold">
                             <span>Subtotal</span>
-                            <span>{formatPrice(newCart?.totalprice)}</span>
+                            <span>{formatPrice(Number(totalPrice))}</span>
                     </div>
 
                     <p className="text-slate-500">

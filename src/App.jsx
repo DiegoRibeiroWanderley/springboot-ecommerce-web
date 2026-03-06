@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './components/home/Home'
@@ -9,8 +9,26 @@ import Contact from './components/Contact'
 import { Toaster } from 'react-hot-toast'
 import Cart from './components/cart/Cart'
 import Login from './components/auth/Login'
+import { useDispatch } from 'react-redux'
+import api from './api/api'
 
 function App() {
+  const dispatch = useDispatch()
+  
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        const cart = await api.get("/carts/users/cart")
+        
+        dispatch({type: "ADD_CART", payload: cart.data})
+      } catch (error) {
+        console.log("Error fetching cart");
+      }
+    }
+
+    fetchCart()
+  }, [dispatch])
+
   return (
     <React.Fragment>
       <BrowserRouter>

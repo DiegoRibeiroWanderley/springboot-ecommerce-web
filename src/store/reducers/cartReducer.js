@@ -1,38 +1,13 @@
 const initialState = {
-    cart: [],
-    totalPrice: 0,
-    cartId: null
+    cart: null
 }
 
 export const cartReducer = (state = initialState, action) => {
     switch (action.type) {
         case "ADD_CART":
-            const product = action.payload
-            const existingProduct = state.cart.find(
-                (item) => item.productId === product.productId
-            )
-
-            if (existingProduct) {
-                const updatedCart = state.cart.map((item) => {
-                    if (item.productId === product.productId) {
-                        return product
-                    } else {
-                        return item
-                    }
-                })
-
-                return {...state, cart: updatedCart}
-            } else {
-                const newCart = [...state.cart, product]
-                return {...state, cart: newCart}
-            }
+            return {...state, cart: action.payload}
         case "REMOVE_CART":
-            return {
-                ...state,
-                cart: state.cart.filter(
-                    (item) => item.productId !== action.payload.productId
-                )
-            }
+            return {...state, cart: action.payload}
         default:
             return state
     }

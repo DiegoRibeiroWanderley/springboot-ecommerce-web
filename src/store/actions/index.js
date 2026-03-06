@@ -51,60 +51,61 @@ export const fetchCategories = () => async (dispatch) => {
 }
 
 export const addToCart = (data, qty = 1, toast) => 
-    (dispatch, getState) => {
+    async (dispatch, getState) => {
         const { products } = getState().products;
-        console.log(products)
         const getProduct = products.find((item) => (item.productId === data.productId))
 
         const isQuantityExist = getProduct.quantity >= qty
 
-        if (isQuantityExist) {
-            dispatch({type: "ADD_CART", payload: {...data, quantity: qty}})
-            localStorage.setItem("cartItems", JSON.stringify(getState().carts.cart))
-            toast.success(`${data?.productName} added to the cart`)
-        } else {
-            toast.error("Out of stock")
+        try {
+            const response = await api.post(`/cart/products/${getProduct.productId}/quantity/${qty}`)
+            const updatedCart = response.data
+
+            if (isQuantityExist) {
+                dispatch({type: "ADD_CART", payload: updatedCart })
+                toast.success(`${data?.productName} added to the cart`)
+            } else {
+                toast.error("Out of stock")
+            }
+        } catch (error) {
+            console.log(error);
+            
         }
     }
 
-export const increaseCartQuantity = (data, toast, currentQuantity, setCurrentQuantity) => 
-    (dispatch, getState) => {
-        const { products } = getState().products;
-        const getProduct = products.find((item) => (item.productId === data.productId))
-        
-        const isQuantityExist = getProduct.quantity >= currentQuantity + 1
+export const increaseCartQuantity = (data, toast) => 
+    async (dispatch, getState) => {
+        const cartItems = getState().carts.cart?.products;
+        const getProduct = cartItems.find((item) => (item.productId === data.productId))
 
-        if (isQuantityExist) {
-            const newQuantity = currentQuantity + 1
-            setCurrentQuantity(newQuantity)
-
-            dispatch({
-                type: "ADD_CART",
-                payload: {...data, quantity: newQuantity}
-            })
-            localStorage.setItem("cartItems", JSON.stringify(getState().carts.cart))
-        } else {
+        try {
+            const updatedCart = await api.put(`/cart/products/${data.productId}/quantity/add`)
+            dispatch({type: "ADD_CART", payload: updatedCart.data })
+        } catch (error) {
             toast.error("Quantity reached to limit")
         }
     }
 
-export const decreaseCartQuantity = (data, newQuantity) => 
-    (dispatch, getState) => {
-        dispatch({
-            type: "ADD_CART",
-            payload: {...data, quantity: newQuantity}
-        })
-        localStorage.setItem("cartItems", JSON.stringify(getState().carts.cart))
+export const decreaseCartQuantity = (data) => 
+    async (dispatch, getState) => {
+        try {
+            const updatedCart = await api.put(`/cart/products/${data.productId}/quantity/delete`)
+            dispatch({type: "ADD_CART", payload: updatedCart.data})
+        } catch (error) {
+            console.log("Error")
+        }
     }
 
 export const removeFromCart = (data, toast) => 
-    (dispatch, getState) => {
-        dispatch({
-            type: "REMOVE_CART",
-            payload: {...data}
-        })
-        toast.success(`${data.productName} removed from cart`)
-        localStorage.setItem("cartItems", JSON.stringify(getState().carts.cart))
+    async (dispatch, getState) => {
+        const cartId = getState().carts.cart?.cartId
+        try {
+            const updatedCart = await api.delete(`/carts/${cartId}/product/${data.productId}`)
+            dispatch({type: "REMOVE_CART", payload: updatedCart.data })
+            toast.success(`${data.productName} removed from cart`)
+        } catch (error) {
+            console.log("Error");
+        }
     }
 
 export const authenticationSignInUser = (sendData, toast, reset, navigate, setLoader) =>

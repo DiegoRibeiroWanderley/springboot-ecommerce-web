@@ -18,24 +18,17 @@ const ItemContent = ({
     specialPrice,
     cartId
 }) => {
-    const [currentQuantity, setCurrentQuantity] = useState(quantity)
     const dispatch = useDispatch()
 
     const handleQtyIncrease = (cartItem) => {
         dispatch(increaseCartQuantity(
             cartItem,
-            toast,
-            currentQuantity,
-            setCurrentQuantity
+            toast
         ))
     }
 
     const handleQtyDecrease = (cartItem) => {
-        if (currentQuantity > 1) {
-            const newQuantity = currentQuantity - 1
-            setCurrentQuantity(newQuantity)
-            dispatch(decreaseCartQuantity(cartItem, newQuantity))
-        }
+        dispatch(decreaseCartQuantity(cartItem))
     }
 
     const removeItemFromCart = (cartItem) => {
@@ -87,7 +80,7 @@ const ItemContent = ({
 
             <div className="justify-self-center lg:text-[17px] text-sm text-slate-600 font-semibold">
                 <SetQuantity
-                    quantity={currentQuantity}
+                    quantity={quantity}
                     cardCounter={true}
                     handleQtyIncrease={() => handleQtyIncrease(
                         {productId,
@@ -114,7 +107,7 @@ const ItemContent = ({
             </div>
 
             <div className="ml-7 sm:ml-18 justify-self-start lg:text-[17px] text-sm text-slate-600 font-semibold">
-                {formatPrice(Number(currentQuantity) * Number(specialPrice))}
+                {formatPrice(Number(quantity) * Number(specialPrice))}
             </div>
         </div>
     )

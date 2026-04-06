@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux'
 import api from './api/api'
 import { currentUser } from './store/actions'
 import { PrivateRoute } from './components/PrivateRout'
+import { Register } from './components/auth/Register'
 
 function App() {
   const dispatch = useDispatch()
@@ -45,6 +46,7 @@ function App() {
           <Route path='/cart' element={ <Cart /> }/>
           <Route path='/' element={<PrivateRoute publicPage />} >
             <Route path='/login' element={ <Login /> }/>
+            <Route path='/register' element={ <Register/> }/>
           </Route>
         </Routes>
       </BrowserRouter>

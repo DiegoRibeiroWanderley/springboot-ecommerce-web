@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchProcuts } from "../store/actions"
+import { fetchProducts } from "../store/actions"
 import ProductCard from "./shared/ProductCard"
 
 const About = () => {
@@ -8,7 +8,7 @@ const About = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(fetchProcuts())
+        dispatch(fetchProducts())
     }, [dispatch])
 
     return (

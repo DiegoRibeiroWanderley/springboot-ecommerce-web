@@ -25,7 +25,7 @@ const InputField = ({
                 className={`${className ? className : ""} py-2 px-2 border outline-none bg-transparent text-slate-800 rounded-md ${errors[id]?.message ? "border-red-500" : "border-slate-700"}`}
                 {...register(id, {
                     required: {value: required, message},
-                    minLenght: min ? {value: min, messsage: `Minimum ${min} character required`} : null,
+                    minLength: min ? {value: min, message: `Minimum ${min} character required`} : null,
                     pattern: type === "email" 
                         ? {value: /^[a-zA-Z0-9]+@(?:[?:[a-zA-Z0-9]+\.)+com+$/, message: "Invalid email"} 
                         : type === "url"

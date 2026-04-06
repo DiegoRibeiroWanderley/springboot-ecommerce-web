@@ -131,6 +131,7 @@ export const authenticationSignInUser = (sendData, toast, reset, navigate, setLo
         toast.error(error?.response?.data?.message || "Internal Server Error")
     } finally {
         setLoader(false)
+        dispatch()
     }
 }
 
@@ -148,4 +149,11 @@ export const registerNewUser = (sendData, toast, reset, navigate, setLoader) =>
     } finally {
         setLoader(false)
     }
+}
+
+export const logoutUser = (navigate) => async (dispatch) => {
+    dispatch({type:"LOG_OUT"})
+    await api.post("/auth/signout")
+    localStorage.removeItem("auth")
+    navigate("/login")
 }

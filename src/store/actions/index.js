@@ -1,6 +1,6 @@
 import api from "../../api/api";
 
-export const fetchProcuts = (queryString) => async (dispatch) => {
+export const fetchProducts = (queryString) => async (dispatch) => {
     try {
         dispatch({type: "IS_FETCHING"})
 
@@ -10,7 +10,7 @@ export const fetchProcuts = (queryString) => async (dispatch) => {
             payload: data.content,
             pageNumber: data.pageNumber,
             pageSize: data.pageSize,
-            totalElemets: data.totalElemets,
+            totalElements: data.totalElements,
             totalPages: data.totalPages,
             lastPage: data.lastPage
         })
@@ -20,7 +20,7 @@ export const fetchProcuts = (queryString) => async (dispatch) => {
         console.log(error);
         dispatch({
             type: "IS_ERROR",
-            payload: error?.response?.data?.message || "Failed to fecth products"
+            payload: error?.response?.data?.message || "Failed to fetch products"
         })
     }
 }
@@ -35,7 +35,7 @@ export const fetchCategories = () => async (dispatch) => {
             payload: data.content,
             pageNumber: data.pageNumber,
             pageSize: data.pageSize,
-            totalElemets: data.totalElemets,
+            totalElements: data.totalElements,
             totalPages: data.totalPages,
             lastPage: data.lastPage
         })
@@ -45,7 +45,7 @@ export const fetchCategories = () => async (dispatch) => {
         console.log(error);
         dispatch({
             type: "IS_ERROR",
-            payload: error?.response?.data?.message || "Failed to fecth category"
+            payload: error?.response?.data?.message || "Failed to fetch category"
         })
     }
 }
@@ -74,25 +74,22 @@ export const addToCart = (data, qty = 1, toast) =>
     }
 
 export const increaseCartQuantity = (data, toast) => 
-    async (dispatch, getState) => {
-        const cartItems = getState().carts.cart?.products;
-        const getProduct = cartItems.find((item) => (item.productId === data.productId))
-
+    async (dispatch) => {
         try {
             const updatedCart = await api.put(`/cart/products/${data.productId}/quantity/add`)
             dispatch({type: "ADD_CART", payload: updatedCart.data })
         } catch (error) {
-            toast.error("Quantity reached to limit")
+            toast.error(error)
         }
     }
 
 export const decreaseCartQuantity = (data) => 
-    async (dispatch, getState) => {
+    async (dispatch) => {
         try {
             const updatedCart = await api.put(`/cart/products/${data.productId}/quantity/delete`)
             dispatch({type: "ADD_CART", payload: updatedCart.data})
         } catch (error) {
-            console.log("Error")
+            console.log(error)
         }
     }
 
@@ -104,7 +101,7 @@ export const removeFromCart = (data, toast) =>
             dispatch({type: "REMOVE_CART", payload: updatedCart.data })
             toast.success(`${data.productName} removed from cart`)
         } catch (error) {
-            console.log("Error");
+            console.log(error);
         }
     }
 
@@ -129,6 +126,22 @@ export const authenticationSignInUser = (sendData, toast, reset, navigate, setLo
         reset()
         toast.success("Login Sucess")
         navigate("/")
+    } catch (error) {
+        console.log(error);
+        toast.error(error?.response?.data?.message || "Internal Server Error")
+    } finally {
+        setLoader(false)
+    }
+}
+
+export const registerNewUser = (sendData, toast, reset, navigate, setLoader) =>
+    async () => {
+    try {
+        setLoader(true)
+        const { data } = await api.post("/auth/signup", sendData)
+        reset()
+        toast.success(data?.message || "User registered successfully")
+        navigate("/Login")
     } catch (error) {
         console.log(error);
         toast.error(error?.response?.data?.message || "Internal Server Error")

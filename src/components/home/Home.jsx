@@ -26,7 +26,7 @@ const Home = () => {
         <div className="py-5">
             <div className="flex flex-col justify-center items-center space-y-2">
                 <h1 className="text-slate-800 text-4xl font-bold">
-                    <span>Discouver our catalog!</span>
+                    <span>Discover our catalog!</span>
                 </h1>
             </div>
 

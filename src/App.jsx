@@ -11,6 +11,8 @@ import Cart from './components/cart/Cart'
 import Login from './components/auth/Login'
 import { useDispatch } from 'react-redux'
 import api from './api/api'
+import { currentUser } from './store/actions'
+import { PrivateRoute } from './components/PrivateRout'
 
 function App() {
   const dispatch = useDispatch()
@@ -26,6 +28,8 @@ function App() {
       }
     }
 
+    dispatch(currentUser())
+
     fetchCart()
   }, [dispatch])
 
@@ -39,7 +43,9 @@ function App() {
           <Route path='/about' element={ <About /> }/>
           <Route path='/contact' element={ <Contact /> }/>
           <Route path='/cart' element={ <Cart /> }/>
-          <Route path='/login' element={ <Login /> }/>
+          <Route path='/' element={<PrivateRoute publicPage />} >
+            <Route path='/login' element={ <Login /> }/>
+          </Route>
         </Routes>
       </BrowserRouter>
       <Toaster position='bottom-center'/>

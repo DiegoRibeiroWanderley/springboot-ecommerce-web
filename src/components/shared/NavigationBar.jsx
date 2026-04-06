@@ -74,7 +74,7 @@ const NavigationBar = () => {
                             to="/cart">
                             <Badge
                                 showZero
-                                badgeContent={cart?.length || 0}
+                                badgeContent={cart?.products?.length || 0}
                                 color="primary"
                                 overlap="circular"
                                 >

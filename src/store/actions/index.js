@@ -108,6 +108,17 @@ export const removeFromCart = (data, toast) =>
         }
     }
 
+export const currentUser = () =>
+    async (dispatch) => {
+        try {
+            const { data } = await api.get("/auth/user")
+            dispatch({ type: "LOGIN_USER", payload: data})
+            localStorage.setItem("auth", JSON.stringify(data))
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 export const authenticationSignInUser = (sendData, toast, reset, navigate, setLoader) =>
     async (dispatch) => {
     try {

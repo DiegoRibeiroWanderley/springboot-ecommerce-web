@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './components/home/Home'
@@ -25,7 +25,7 @@ function App() {
         
         dispatch({type: "ADD_CART", payload: cart.data})
       } catch (error) {
-        console.log("Error fetching cart");
+        console.log(error);
       }
     }
 

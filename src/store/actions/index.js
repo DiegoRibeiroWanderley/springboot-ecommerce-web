@@ -124,14 +124,13 @@ export const authenticationSignInUser = (sendData, toast, reset, navigate, setLo
         dispatch({ type: "LOGIN_USER", payload: data })
         localStorage.setItem("auth", JSON.stringify(data))
         reset()
-        toast.success("Login Sucess")
+        toast.success("Login Success")
         navigate("/")
     } catch (error) {
         console.log(error);
         toast.error(error?.response?.data?.message || "Internal Server Error")
     } finally {
         setLoader(false)
-        dispatch()
     }
 }
 

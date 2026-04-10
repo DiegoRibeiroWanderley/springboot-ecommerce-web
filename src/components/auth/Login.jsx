@@ -4,8 +4,9 @@ import { Link, useNavigate } from "react-router-dom"
 import { AiOutlineLogin } from "react-icons/ai"
 import InputField from "../shared/InputField"
 import { useDispatch } from "react-redux"
-import { authenticationSignInUser } from "../../store/actions"
+import { authenticationSignInUser, currentUser } from "../../store/actions"
 import toast from "react-hot-toast"
+import Spinner from "../shared/Spinner"
 
 const Login = () => {
     const navigate = useNavigate()
@@ -16,6 +17,7 @@ const Login = () => {
 
     const loginHandler = async (data) => {
         dispatch(authenticationSignInUser(data, toast, reset, navigate, setLoader))
+        dispatch(currentUser())
     }
 
     return (
@@ -56,7 +58,10 @@ const Login = () => {
                     className="bg-linear-to-r from-purple-600 to-red-400 flex gap-2 items-center justify-center font-semibold text-white w-full py-2 hover:text-slate-400 transition-colors duration-100 rounded-sm mt-6"
                     type="submit">
                     {loader ? (
-                        <>Loading...</>
+                        <>
+                            <Spinner />
+                            Loading...
+                        </>
                     ) : <>Login</>}
                 </button>
                 <p className="text-center text-sm text-slate-700 mt-6">

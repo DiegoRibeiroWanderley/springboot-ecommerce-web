@@ -2,7 +2,8 @@ const initialState = {
     isLoading: false,
     errorMessage: null,
     categoryIsLoading: false,
-    categoryErrorMessage: null
+    categoryErrorMessage: null,
+    buttonLoader: false
 }
 
 export const errorReducer = (state = initialState, action) => {
@@ -42,6 +43,18 @@ export const errorReducer = (state = initialState, action) => {
                 ...state,
                 categoryIsLoading: false,
                 categoryErrorMessage: null
+            }
+        case "BUTTON_LOADER_TRUE":
+            return {
+                ...state,
+                buttonLoader: true,
+                errorMessage: null,
+            }
+        case "BUTTON_LOADER_FALSE":
+            return {
+                ...state,
+                buttonLoader: false,
+                errorMessage: null,
             }
         default:
             return state

@@ -50,6 +50,16 @@ export const fetchCategories = () => async (dispatch) => {
     }
 }
 
+export const fetchCart = () => 
+    async (dispatch) => {
+      try {
+        const cart = await api.get("/carts/users/cart")
+        dispatch({type: "ADD_CART", payload: cart.data})
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
 export const addToCart = (data, qty = 1, toast) => 
     async (dispatch, getState) => {
         const { products } = getState().products;
@@ -130,6 +140,7 @@ export const authenticationSignInUser = (sendData, toast, reset, navigate, setLo
         console.log(error);
         toast.error(error?.response?.data?.message || "Internal Server Error")
     } finally {
+        dispatch(fetchCart())
         setLoader(false)
     }
 }
@@ -154,5 +165,22 @@ export const logoutUser = (navigate) => async (dispatch) => {
     dispatch({type:"LOG_OUT"})
     await api.post("/auth/signout")
     localStorage.removeItem("auth")
+    dispatch({type: "ADD_CART", payload: null})
     navigate("/login")
+}
+
+export const addUpdateUserAddress = (sendData, toast, setOpenAddressModal) => 
+    async (dispatch) => {
+        try {
+            dispatch({ type: "BUTTON_LOADER_TRUE"})
+            await api.post("/addresses", sendData)
+            toast.success("Address registered successfully")
+        } catch (error) {
+            console.log(error);
+            toast.error(error?.response?.data?.message || "Internal Server Error")
+            dispatch({ type:"IS_ERROR", payload: null })
+        } finally {
+            dispatch({ type: "BUTTON_LOADER_FALSE"})
+            setOpenAddressModal(false)
+        }
 }

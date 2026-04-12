@@ -25,7 +25,7 @@ const Login = () => {
             <form
                 onSubmit={handleSubmit(loginHandler)}
                 className="sm:w-112.5 w-90 shadow-lg py-8 sm:px-8 px-4 rounded-md">
-                    <div className="flex flex-col items-center justfy-center space-y-4">
+                    <div className="flex flex-col items-center justify-center space-y-4">
                         <AiOutlineLogin className="text-slate-800" size={40} />
                         <h1 className="text-slate-800 text-center font-bold lg:text-3xl text:2xl">
                             Login Here
@@ -59,7 +59,7 @@ const Login = () => {
                     type="submit">
                     {loader ? (
                         <>
-                            <Spinner />
+                            <Spinner size={10} />
                             Loading...
                         </>
                     ) : <>Login</>}

@@ -172,7 +172,7 @@ export const logoutUser = (navigate) => async (dispatch) => {
 export const addUpdateUserAddress = (sendData, toast, setOpenAddressModal) => 
     async (dispatch) => {
         try {
-            dispatch({ type: "BUTTON_LOADER_TRUE"})
+            dispatch({ type: "BUTTON_LOADER"})
             await api.post("/addresses", sendData)
             toast.success("Address registered successfully")
         } catch (error) {
@@ -180,7 +180,24 @@ export const addUpdateUserAddress = (sendData, toast, setOpenAddressModal) =>
             toast.error(error?.response?.data?.message || "Internal Server Error")
             dispatch({ type:"IS_ERROR", payload: null })
         } finally {
-            dispatch({ type: "BUTTON_LOADER_FALSE"})
+            dispatch({ type: "IS_SUCCESS"})
             setOpenAddressModal(false)
         }
+}
+
+export const getUserAddresses = () => async (dispatch) => {
+    try {
+        dispatch({type: "IS_FETCHING"})
+
+        const {data} = await api.get(`/addresses`)
+        dispatch({type: "USER_ADDRESSES", payload: data})
+
+        dispatch({type: "IS_SUCCESS"})
+    } catch (error) {
+        console.log(error);
+        dispatch({
+            type: "IS_ERROR",
+            payload: error?.response?.data?.message || "Failed to fetch user addresses"
+        })
+    }
 }

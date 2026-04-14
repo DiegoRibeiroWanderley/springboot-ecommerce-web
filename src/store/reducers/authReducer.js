@@ -12,6 +12,11 @@ export const authReducer = (state = initialState, action) => {
                 user: null,
                 address: null
             }
+        case "USER_ADDRESSES":
+            return { 
+                ...state,
+                address: action.payload
+            }
         default:
             return state
     }

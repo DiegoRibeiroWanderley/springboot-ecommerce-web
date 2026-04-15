@@ -219,3 +219,19 @@ export const selectUserCheckoutAddress = (address) => {
     payload: address,
   };
 };
+
+export const deleteUserAddress =
+  (toast, addressId, setOpenDeleteModal) => async (dispatch) => {
+    try {
+      dispatch({ type: "BUTTON_LOADER " });
+      await api.delete(`/addresses/${addressId}`);
+    } catch (error) {
+      dispatch({ type: "IS_ERROR", payload: error?.response?.data?.message });
+    } finally {
+      dispatch({ type: "IS_SUCCESS" });
+      dispatch(getUserAddresses());
+      toast.success("Address removed successfully");
+      setOpenDeleteModal(false);
+      dispatch({ type: "SELECT_CHECKOUT_ADDRESS" });
+    }
+  };

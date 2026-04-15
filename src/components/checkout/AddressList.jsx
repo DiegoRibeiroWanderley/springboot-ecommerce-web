@@ -14,6 +14,7 @@ const AddressList = ({
   addresses,
   setSelectedAddress,
   setOpenAddressModal,
+  setOpenDeleteModal,
 }) => {
   const dispatch = useDispatch();
 
@@ -28,6 +29,7 @@ const AddressList = ({
 
   const onDeleteButtonHandler = (address) => {
     setSelectedAddress(address);
+    setOpenDeleteModal(true);
   };
 
   const handleAddressSelection = (address) => {

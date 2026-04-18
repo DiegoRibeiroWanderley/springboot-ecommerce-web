@@ -122,12 +122,18 @@ export const removeFromCart = (data, toast) => async (dispatch, getState) => {
 };
 
 export const currentUser = () => async (dispatch) => {
+  dispatch({ type: "IS_FETCHING" });
   try {
     const { data } = await api.get("/auth/user");
     dispatch({ type: "LOGIN_USER", payload: data });
     localStorage.setItem("auth", JSON.stringify(data));
   } catch (error) {
-    console.log(error);
+    dispatch({
+      type: "IS_ERROR",
+      payload: error?.response?.data?.message || "Failed to fetch user",
+    });
+  } finally {
+    dispatch({ type: "IS_SUCCESS" });
   }
 };
 
@@ -188,7 +194,11 @@ export const addUpdateUserAddress =
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message || "Internal Server Error");
-      dispatch({ type: "IS_ERROR", payload: null });
+      dispatch({
+        type: "IS_ERROR",
+        payload:
+          error?.response?.data?.message || "Failed to add/update address",
+      });
     } finally {
       dispatch({ type: "IS_SUCCESS" });
       setOpenAddressModal(false);
@@ -235,3 +245,7 @@ export const deleteUserAddress =
       dispatch({ type: "SELECT_CHECKOUT_ADDRESS" });
     }
   };
+
+export const selectPaymentMethod = (method) => {
+  return { type: "SELECT_PAYMENT_METHOD", payload: method };
+};

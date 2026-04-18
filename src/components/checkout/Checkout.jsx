@@ -6,12 +6,14 @@ import { getUserAddresses } from "../../store/actions";
 import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
 import ErrorPage from "../shared/ErrorPage";
+import PaymentMethod from "./PaymentMethod";
 
 const Checkout = () => {
   const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
   const steps = ["Address", "Payment Method", "Order Summary", "Payment"];
   const { selectedUserAddress } = useSelector((state) => state.auth);
+  const { paymentMethod } = useSelector((state) => state.payment);
 
   const handleBack = () => {
     setActiveStep((prevStep) => prevStep - 1);
@@ -47,6 +49,7 @@ const Checkout = () => {
       ) : (
         <div className="mt-5">
           {activeStep === 0 && <AddressInfo addresses={addresses} />}
+          {activeStep === 1 && <PaymentMethod />}
         </div>
       )}
 
@@ -71,7 +74,9 @@ const Checkout = () => {
           <Button
             variant="contained"
             disabled={
-              errorMessage || (activeStep === 0 && !selectedUserAddress)
+              errorMessage ||
+              (activeStep === 0 && !selectedUserAddress) ||
+              (activeStep === 1 && !paymentMethod)
             }
             onClick={handleNext}
             sx={{

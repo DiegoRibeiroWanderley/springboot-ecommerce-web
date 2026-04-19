@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/home/Home";
@@ -9,20 +9,11 @@ import Contact from "./components/Contact";
 import { Toaster } from "react-hot-toast";
 import Cart from "./components/cart/Cart";
 import Login from "./components/auth/Login";
-import { useDispatch } from "react-redux";
-import { currentUser, fetchCart } from "./store/actions";
 import { PrivateRoute } from "./components/PrivateRout";
 import { Register } from "./components/auth/Register";
 import Checkout from "./components/checkout/Checkout";
 
 function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchCart());
-    dispatch(currentUser());
-  }, [dispatch]);
-
   return (
     <React.Fragment>
       <BrowserRouter>
@@ -38,7 +29,7 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
           </Route>
 
-          <Route path="/" element={<PrivateRoute />}>
+          <Route path="/" element={<PrivateRoute publicPage />}>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Route>

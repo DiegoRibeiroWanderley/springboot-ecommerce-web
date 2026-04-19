@@ -2,16 +2,21 @@ import { Button, Step, StepLabel, Stepper } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import AddressInfo from "./AddressInfo";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserAddresses } from "../../store/actions";
+import { fetchCart, getUserAddresses } from "../../store/actions";
 import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
 import ErrorPage from "../shared/ErrorPage";
 import PaymentMethod from "./PaymentMethod";
+import OrderSummary from "./OrderSummary";
+import PaymentPix from "./PaymentPix";
+import PaymentCreditCard from "./PaymentCreditCard";
 
 const Checkout = () => {
   const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
   const steps = ["Address", "Payment Method", "Order Summary", "Payment"];
+
+  const { cart } = useSelector((state) => state.carts);
   const { selectedUserAddress } = useSelector((state) => state.auth);
   const { paymentMethod } = useSelector((state) => state.payment);
 
@@ -29,6 +34,7 @@ const Checkout = () => {
 
   useEffect(() => {
     dispatch(getUserAddresses());
+    dispatch(fetchCart());
   }, [dispatch]);
 
   const addresses = useSelector((state) => state.auth.addresses);
@@ -50,6 +56,19 @@ const Checkout = () => {
         <div className="mt-5">
           {activeStep === 0 && <AddressInfo addresses={addresses} />}
           {activeStep === 1 && <PaymentMethod />}
+          {activeStep === 2 && (
+            <OrderSummary
+              totalPrice={cart.totalPrice}
+              cart={cart}
+              address={selectedUserAddress}
+              paymentMethod={paymentMethod}
+            />
+          )}
+          {activeStep === 3 && (
+            <>
+              {paymentMethod === "pix" ? <PaymentPix /> : <PaymentCreditCard />}
+            </>
+          )}
         </div>
       )}
 

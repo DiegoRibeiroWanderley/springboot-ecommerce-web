@@ -29,7 +29,7 @@ const PaymentMethod = () => {
         >
           <FormControlLabel value="pix" control={<Radio />} label="Pix" />
           <FormControlLabel
-            value="creditCard"
+            value="card"
             control={<Radio />}
             label="Credit Card"
           />

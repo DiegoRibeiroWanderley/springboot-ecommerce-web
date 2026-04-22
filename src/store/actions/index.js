@@ -249,3 +249,26 @@ export const deleteUserAddress =
 export const selectPaymentMethod = (method) => {
   return { type: "SELECT_PAYMENT_METHOD", payload: method };
 };
+
+export const executePayment = () => async (dispatch, getState) => {
+  dispatch({ type: "IS_LOADING" });
+  const cartId = getState().carts.cart?.cartId;
+  const selectedMethod = getState().payment.paymentMethod?.toUpperCase();
+  const urlToRedirect = {
+    returnUrl: "http://localhost:5173/checkout",
+    completionUrl: "http://localhost:5173/",
+  };
+  try {
+    const { data } = await api.post(
+      `/payment/cart/${cartId}/${selectedMethod}`,
+      urlToRedirect,
+    );
+    console.log(data.data.url);
+
+    window.location.href = data.data.url;
+  } catch (error) {
+    dispatch({ type: "IS_ERROR", payload: error?.response?.data?.message });
+  } finally {
+    dispatch({ type: "IS_SUCCESS" });
+  }
+};

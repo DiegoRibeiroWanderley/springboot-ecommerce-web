@@ -8,8 +8,7 @@ import Spinner from "../shared/Spinner";
 import ErrorPage from "../shared/ErrorPage";
 import PaymentMethod from "./PaymentMethod";
 import OrderSummary from "./OrderSummary";
-import PaymentPix from "./PaymentPix";
-import PaymentCreditCard from "./PaymentCreditCard";
+import Payment from "./Payment";
 
 const Checkout = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -64,11 +63,7 @@ const Checkout = () => {
               paymentMethod={paymentMethod}
             />
           )}
-          {activeStep === 3 && (
-            <>
-              {paymentMethod === "pix" ? <PaymentPix /> : <PaymentCreditCard />}
-            </>
-          )}
+          {activeStep === 3 && <Payment />}
         </div>
       )}
 

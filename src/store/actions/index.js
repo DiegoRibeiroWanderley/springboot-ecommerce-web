@@ -1,4 +1,5 @@
 import api from "../../api/api";
+import { handleAPIError } from "../../utils/errorsMapper";
 
 export const fetchProducts = (queryString) => async (dispatch) => {
   try {
@@ -165,8 +166,7 @@ export const registerNewUser =
       toast.success(data?.message || "User registered successfully");
       navigate("/Login");
     } catch (error) {
-      console.log(error);
-      toast.error(error?.response?.data?.message || "Internal Server Error");
+      toast.error(handleAPIError(error?.response?.data?.message));
     } finally {
       setLoader(false);
     }

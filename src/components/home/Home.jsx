@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import Banner from "./Banner";
 import { useEffect } from "react";
-import { fetchCart, fetchProducts } from "../../store/actions";
+import { currentUser, fetchCart, fetchProducts } from "../../store/actions";
 import ProductCard from "../shared/ProductCard";
 import Loader from "../shared/Loader";
 import { Link } from "react-router-dom";
@@ -13,6 +13,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(fetchProducts());
+    dispatch(currentUser());
     dispatch(fetchCart());
   }, [dispatch]);
 
